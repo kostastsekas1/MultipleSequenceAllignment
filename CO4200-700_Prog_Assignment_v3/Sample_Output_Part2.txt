@@ -1,0 +1,7 @@
+Computing Alignment for  3  Sequences in ./sequences/multiple3.txt...
+Total Comparisons:  9
+[[69. 16. 31.]
+ [16. 53. 11.]
+ [31. 11. 56.]]
+
+Process finished with exit code 0
