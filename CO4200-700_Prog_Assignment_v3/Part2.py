@@ -1,28 +1,51 @@
+import numpy as np
 from NW_Part1 import Alignment
 
-"""
-Running this script will compute a pairwise alignment between two given 
-sequences X and Y. 
 
-As you hopefully see when running this script, the score of an alignment is 
-returned for each pair of inputs using the method score_alignment
+#### 2
+# reading  and initializing a list to hold the sequences and adding them in a list
+ListOfSequences = []
+multipleSequencesFile = open("./sequences/multiple3.txt", "r")
+#first line of the file is how many sequences are there
+sequencesNumber = multipleSequencesFile.readline().strip()
 
-After confirming that running this code indeed provides a visualisation of 
-a sequence alignment along with a score, begin editing this script to return an 
-array of score relating to each sequence found within one of the files in ./sequences
+if sequencesNumber.isnumeric():
+    sequencesNumber = int(sequencesNumber)
 
-"""
+# read the rest of file  and append sequences in the list
+for i in range(0, sequencesNumber+1):
+    x = multipleSequencesFile.readline().strip()
+    if x != "":
+        ListOfSequences.append(x)
 
-# Here is a sample output of working with the NW algorithm from Part1
-x = "GSAQVKGHGKKVADALTNAVAHVDDMPNALSALSDLHAHKL"
-y = "NNPELQAHAGKVFKLVYEAAIQLQVTGVVVTDATLKNLGSVHVSKG"
+#close file to save resources
+multipleSequencesFile.close()
 
-# Here we are calling the alignment method
-a = Alignment(x, y) # instantiates the alignment object, providing sequences X and Y
-a.compute_alignment() # run to do the actual computation
-print("Computed alignment:")
-a.display_alignment() # this can be displayed to help visualise what is going on
+# function returns a matrix that when taking a list of sequences returns
+# a matrix of their scores.sequence i and j can be found in the Matrix in position (i,j)
+# computes the alignment for any pair of sequences even with itself
+def GetScoresForPairs(SequenceList):
 
-# a.score_alignment provides a float score for X and Y alignment
-print("Score of alignment: " + str(a.score_alignment()))
+    tempMatrix = []
+    for sequence1 in SequenceList:
+        TempList = []
+        for sequence2 in SequenceList:
+
+            pair = Alignment(sequence1, sequence2)
+            pair.compute_alignment()
+            TempList.append(pair.score_alignment())
+        tempMatrix.append(TempList)
+    return tempMatrix
+
+#calling the function and saving it in variable
+ScoreMatrix = GetScoresForPairs(ListOfSequences)
+# making the list an array to print it with its build in function
+print(np.array(ScoreMatrix))
+
+
+
+
+
+
+
 
